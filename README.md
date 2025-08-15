@@ -5,7 +5,7 @@ A collection of Dart and Flutter lint rules to help you write clean, high-qualit
 
 | Lint Rule | Implemented | Quick Fix | Assist |
 | :--- | :---: | :---: | :---: |
-| `use_sized_box_instead_of_container` | ❌ | ❌ | ❌ |
+| `use_sized_box_instead_of_container` | ✅ | ✅ | ❌ |
 | `const_only_on_leaf_widgets` | ❌ | ❌ | ❌ |
 | `avoid_unnecessary_rebuilds` | ❌ | ❌ | ❌ |
 | `no_hardcoded_colors_or_text_styles` | ❌ | ❌ | ❌ |
@@ -13,7 +13,7 @@ A collection of Dart and Flutter lint rules to help you write clean, high-qualit
 | `unnecessary_opacity_widget` | ❌ | ❌ | ❌ |
 | `enforce_widget_suffix` | ❌ | ❌ | ❌ |
 | `explicit_provider_dispose` | ❌ | ❌ | ❌ |
-| `future_without_async_await` | ❌ | ❌ | ❌ |
+| `future_without_async_await` | ✅ | ✅ | ❌ |
 | `no_private_properties_in_public_api` | ❌ | ❌ | ❌ |
 | `prefer_double_over_int_for_division` | ❌ | ❌ | ❌ |
 | `enforce_immutability_on_models` | ❌ | ❌ | ❌ |
