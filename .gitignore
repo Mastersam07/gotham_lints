@@ -13,3 +13,5 @@ OLDREADME.md
 .fvmrc
 build/
 example/
+coverage/
+*.txt
