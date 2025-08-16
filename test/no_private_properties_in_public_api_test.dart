@@ -28,7 +28,7 @@ class MyClass {
 }
 class _PrivateType {}
 ''',
-      [lint(18, 12)], // Character 18 and spans 12 characters
+      [lint(18, 12)], // _PrivateType at Character 18 and spans 12 characters
     );
   }
 
@@ -40,7 +40,7 @@ class MyClass {
 }
 class _PrivateType {}
 ''',
-      [lint(32, 13)],
+      [lint(35, 12)], // _PrivateType at Character 35 and spans 12 characters
     );
   }
 
