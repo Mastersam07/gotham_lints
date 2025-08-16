@@ -3,7 +3,6 @@ import 'package:analyzer/analysis_rule/rule_context.dart';
 import 'package:analyzer/analysis_rule/rule_visitor_registry.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/error.dart';
 
 class NoPrivatePropertiesInPublicApiRule extends AnalysisRule {
@@ -14,10 +13,7 @@ class NoPrivatePropertiesInPublicApiRule extends AnalysisRule {
   );
 
   NoPrivatePropertiesInPublicApiRule()
-      : super(
-    name: 'no_private_properties_in_public_api',
-    description: 'Flags private types exposed in a public API.',
-  );
+    : super(name: 'no_private_properties_in_public_api', description: 'Flags private types exposed in a public API.');
 
   @override
   LintCode get diagnosticCode => code;
@@ -46,9 +42,9 @@ class _PublicApiVisitor extends SimpleAstVisitor<void> {
     }
 
     for (final parameter in node.parameters?.parameters ?? []) {
-      final type = parameter.declaredElement?.type;
-      if (type is InterfaceType && type.element.name?.startsWith('_') == true) {
-        rule.reportAtNode(parameter);
+      final typeAnnotation = parameter.type;
+      if (typeAnnotation is NamedType && typeAnnotation.name.lexeme.startsWith('_')) {
+        rule.reportAtNode(typeAnnotation);
       }
     }
   }
