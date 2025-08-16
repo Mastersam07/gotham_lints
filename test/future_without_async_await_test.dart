@@ -30,7 +30,7 @@ Future<void> f() {
   return Future.value();
 }
 ''',
-      [lint(21, 45)], // Function starts at character 21 and ends at 45
+      [lint(21, 45)], // Function starts at character 21 and spans 45 characters
     );
   }
 
