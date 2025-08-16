@@ -1,7 +1,6 @@
 import 'package:analysis_server_plugin/plugin.dart';
 import 'package:analysis_server_plugin/registry.dart';
 import 'package:gotham_lints/src/fixes/avoid_unhandled_future.dart';
-import 'package:gotham_lints/src/fixes/disposable_mixin_enforcement.dart';
 import 'package:gotham_lints/src/fixes/enforce_immutability_on_models.dart';
 import 'package:gotham_lints/src/fixes/future_without_async_await.dart';
 import 'package:gotham_lints/src/fixes/no_private_properties_in_public_api.dart';
@@ -11,7 +10,6 @@ import 'package:gotham_lints/src/fixes/unnecessary_opacity_widget.dart';
 import 'package:gotham_lints/src/fixes/use_sizedbox_instead_container.dart';
 import 'package:gotham_lints/src/rules/avoid_deeply_nested_widgets.dart';
 import 'package:gotham_lints/src/rules/avoid_unhandled_future.dart';
-import 'package:gotham_lints/src/rules/disposable_mixin_enforcement.dart';
 import 'package:gotham_lints/src/rules/enforce_immutability_on_models.dart';
 import 'package:gotham_lints/src/rules/file_length_limit.dart';
 import 'package:gotham_lints/src/rules/future_without_async_await.dart';
@@ -38,7 +36,6 @@ class GothamLintsPlugin extends Plugin {
       ..registerLintRule(EnforceImmutabilityOnModelsRule())
       ..registerLintRule(AvoidUnhandledFutureRule())
       ..registerLintRule(NoPrivatePropertiesInPublicApiRule())
-      ..registerLintRule(DisposableMixinEnforcementRule())
       ..registerLintRule(AvoidDeeplyNestedWidgetsRule())
       ..registerLintRule(FileLengthRule())
       ..registerLintRule(NoExportFromSrcRule())
@@ -49,7 +46,6 @@ class GothamLintsPlugin extends Plugin {
       ..registerFixForRule(PreferDoubleOverIntForDivisionRule.code, PreferIntegerDivisionFix.new)
       ..registerFixForRule(EnforceImmutabilityOnModelsRule.code, EnforceFinalFix.new)
       ..registerFixForRule(AvoidUnhandledFutureRule.code, AddAwaitFix.new)
-      ..registerFixForRule(NoPrivatePropertiesInPublicApiRule.code, NoPrivatePropertiesInPublicApiFix.new)
-      ..registerFixForRule(DisposableMixinEnforcementRule.code, AddDisposableMixinFix.new);
+      ..registerFixForRule(NoPrivatePropertiesInPublicApiRule.code, NoPrivatePropertiesInPublicApiFix.new);
   }
 }
