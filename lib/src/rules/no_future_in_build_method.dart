@@ -44,7 +44,7 @@ class _NoFutureInBuildMethodVisitor extends SimpleAstVisitor<void> {
       return;
     }
 
-    final returnType = node.staticInvokeType;
+    final returnType = node.staticType;
     if (returnType != null && returnType.isDartAsyncFuture) {
       rule.reportAtNode(node);
     }

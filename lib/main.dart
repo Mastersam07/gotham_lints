@@ -4,6 +4,7 @@ import 'package:gotham_lints/src/fixes/avoid_unhandled_future.dart';
 import 'package:gotham_lints/src/fixes/enforce_immutability_on_models.dart';
 import 'package:gotham_lints/src/fixes/future_without_async_await.dart';
 import 'package:gotham_lints/src/fixes/no_private_properties_in_public_api.dart';
+import 'package:gotham_lints/src/fixes/one_class_per_file.dart';
 import 'package:gotham_lints/src/fixes/prefer_double_over_int_for_division.dart';
 import 'package:gotham_lints/src/fixes/prefer_listview_builder.dart';
 import 'package:gotham_lints/src/fixes/unnecessary_opacity_widget.dart';
@@ -14,8 +15,10 @@ import 'package:gotham_lints/src/rules/enforce_immutability_on_models.dart';
 import 'package:gotham_lints/src/rules/file_length_limit.dart';
 import 'package:gotham_lints/src/rules/future_without_async_await.dart';
 import 'package:gotham_lints/src/rules/no_export_from_src.dart';
+import 'package:gotham_lints/src/rules/no_future_in_build_method.dart';
 import 'package:gotham_lints/src/rules/no_hardcoded_colors_or_text_styles.dart';
 import 'package:gotham_lints/src/rules/no_private_properties_in_public_api.dart';
+import 'package:gotham_lints/src/rules/one_class_per_file.dart';
 import 'package:gotham_lints/src/rules/prefer_double_over_int_for_division.dart';
 import 'package:gotham_lints/src/rules/prefer_listview_builder.dart';
 import 'package:gotham_lints/src/rules/unnecessary_opacity_widget.dart';
@@ -24,7 +27,6 @@ import 'package:gotham_lints/src/rules/use_sizedbox_instead_container.dart';
 final plugin = GothamLintsPlugin();
 
 class GothamLintsPlugin extends Plugin {
-  
   @override
   String get name => 'gotham_lint_plugin';
 
@@ -43,6 +45,8 @@ class GothamLintsPlugin extends Plugin {
       ..registerLintRule(AvoidDeeplyNestedWidgetsRule())
       ..registerLintRule(FileLengthRule())
       ..registerLintRule(NoExportFromSrcRule())
+      ..registerLintRule(OneClassPerFileRule())
+      ..registerLintRule(NoFutureInBuildMethodRule())
       ..registerFixForRule(UseSizedBoxInsteadOfContainerRule.code, UseSizedBoxFix.new)
       ..registerFixForRule(FutureWithoutAsyncAwaitRule.code, AddAsyncKeyword.new)
       ..registerFixForRule(PreferListViewBuilderRule.code, ConvertToListViewBuilderFix.new)
@@ -50,6 +54,7 @@ class GothamLintsPlugin extends Plugin {
       ..registerFixForRule(PreferDoubleOverIntForDivisionRule.code, PreferIntegerDivisionFix.new)
       ..registerFixForRule(EnforceImmutabilityOnModelsRule.code, EnforceFinalFix.new)
       ..registerFixForRule(AvoidUnhandledFutureRule.code, AddAwaitFix.new)
-      ..registerFixForRule(NoPrivatePropertiesInPublicApiRule.code, NoPrivatePropertiesInPublicApiFix.new);
+      ..registerFixForRule(NoPrivatePropertiesInPublicApiRule.code, NoPrivatePropertiesInPublicApiFix.new)
+      ..registerFixForRule(OneClassPerFileRule.code, OneClassPerFileFix.new);
   }
 }

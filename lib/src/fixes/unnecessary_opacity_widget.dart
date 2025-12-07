@@ -10,7 +10,7 @@ class UnnecessaryOpacityFix extends ResolvedCorrectionProducer {
   static const _kind = FixKind(
     'dart.fix.unnecessaryOpacity',
     DartFixKindPriority.standard,
-    'Replace Opacity with color property',
+    'Replace Opacity with Image opacity parameter',
   );
 
   UnnecessaryOpacityFix({required super.context});
@@ -43,16 +43,39 @@ class UnnecessaryOpacityFix extends ResolvedCorrectionProducer {
     final opacityValue = opacityArgument.expression.toString();
     final childExpression = childArgument.expression;
 
-    builder.addDartFileEdit(file, (builder) {
-      builder.addDeletion(range.startEnd(node.beginToken, childExpression.beginToken));
+    if (childExpression is! InstanceCreationExpression) {
+      return;
+    }
 
-      builder.addSimpleInsertion(childExpression.end, ', color: Colors.white.withOpacity($opacityValue)');
+    await builder.addDartFileEdit(file, (builder) {
+      // Step 1: Delete "Opacity(opacity: X, child: " up to but not including the Image widget
+      // Use the type name's begin token to ensure we keep "Image"
+      final imageTypeBeginToken = childExpression.constructorName.type.beginToken;
+      builder.addDeletion(range.startStart(node.beginToken, imageTypeBeginToken));
 
-      final parent = node.parent;
-      if (parent is ArgumentList) {
-        builder.addDeletion(range.startEnd(node.endToken, node.endToken.next!));
+      // Step 2: Add the opacity parameter to the Image widget
+      // Insert before the closing paren of the Image's argument list
+      final imageClosingParen = childExpression.argumentList.rightParenthesis;
+      if (childExpression.argumentList.arguments.isEmpty) {
+        builder.addSimpleInsertion(imageClosingParen.offset, 'opacity: AlwaysStoppedAnimation($opacityValue)');
       } else {
-        builder.addDeletion(range.endEnd(node.endToken.previous!, node.endToken));
+        builder.addSimpleInsertion(imageClosingParen.offset, ', opacity: AlwaysStoppedAnimation($opacityValue)');
+      }
+
+      // Step 3: Delete from after the Image widget to the end of Opacity widget
+      // This includes the closing paren, but preserve any trailing comma
+      final imageEndToken = childExpression.endToken;
+      final opacityEndToken = node.endToken;
+
+      // Check if there's a trailing comma after the Opacity widget
+      final nextToken = opacityEndToken.next;
+      if (nextToken != null && nextToken.lexeme == ',') {
+        // Delete from after Image to just before the trailing comma
+        // This preserves the comma
+        builder.addDeletion(range.startEnd(imageEndToken.next!, opacityEndToken));
+      } else {
+        // No trailing comma, delete from after Image to the end of Opacity
+        builder.addDeletion(range.startEnd(imageEndToken.next!, opacityEndToken));
       }
     });
   }

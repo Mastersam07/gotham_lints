@@ -23,8 +23,6 @@ class PreferIntegerDivisionFix extends ResolvedCorrectionProducer {
       return;
     }
 
-    builder.addDartFileEdit(file, (builder) {
-      builder.addSimpleReplacement(range.node(node), '~/');
-    });
+    builder.addDartFileEdit(file, (builder) => builder.addSimpleReplacement(range.node(node), '~/'));
   }
 }
