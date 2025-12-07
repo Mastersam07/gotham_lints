@@ -6,7 +6,6 @@ A collection of Dart and Flutter lint rules to help you write clean, high-qualit
 | Lint Rule | Implemented | Quick Fix | Assist |
 | :--- | :---: | :---: | :---: |
 | `use_sized_box_instead_of_container` | ✅ | ✅ | ❌ |
-| `const_only_on_leaf_widgets` | ✅ | ✅ | ❌ |
 | `no_hardcoded_colors_or_text_styles` | ✅ | ❌ | ❌ |
 | `prefer_listview_builder` | ✅ | ✅ | ❌ |
 | `unnecessary_opacity_widget` | ✅ | ✅ | ❌ |
@@ -17,7 +16,6 @@ A collection of Dart and Flutter lint rules to help you write clean, high-qualit
 | `avoid_deeply_nested_widgets` | ✅ | ❌ | ❌ |
 | `no_export_from_src` | ✅ | ❌ | ❌ |
 | `no_future_in_build_method` | ✅ | ❌ | ❌ |
-| `disposable_mixin_enforcement` | ✅ | ✅ | ❌ |
 | `avoid_unhandled_future` | ✅ | ✅ | ❌ |
 | `one_class_per_file` | ✅ | ✅ | ❌ |
 | `file_length_limit` | ✅ | ❌ | ❌ |
