@@ -13,22 +13,17 @@ class EnforceImmutabilityOnModelsRule extends AnalysisRule {
   );
 
   EnforceImmutabilityOnModelsRule()
-      : super(
-    name: 'enforce_immutability_on_models',
-    description: 'Flags non-final fields in data model classes.',
-  );
+    : super(name: 'enforce_immutability_on_models', description: 'Flags non-final fields in data model classes.');
 
   @override
   LintCode get diagnosticCode => code;
 
   @override
   void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
-    // Register the visitor to check for class declarations.
     registry.addClassDeclaration(this, _ImmutabilityVisitor(this, context));
   }
 }
 
-/// The visitor for the `EnforceImmutabilityOnModelsRule`.
 class _ImmutabilityVisitor extends SimpleAstVisitor<void> {
   final AnalysisRule rule;
   final RuleContext context;
@@ -37,11 +32,8 @@ class _ImmutabilityVisitor extends SimpleAstVisitor<void> {
 
   @override
   void visitClassDeclaration(ClassDeclaration node) {
-    // Simple way to identify a data model: a class with a constructor
-    // that has at least one named parameter.
     final hasNamedConstructor = node.members.any(
-          (member) => member is ConstructorDeclaration &&
-          member.parameters.parameters.any((p) => p.isNamed),
+      (member) => member is ConstructorDeclaration && member.parameters.parameters.any((p) => p.isNamed),
     );
 
     if (!hasNamedConstructor) {

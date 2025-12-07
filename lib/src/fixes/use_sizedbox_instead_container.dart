@@ -22,9 +22,9 @@ class UseSizedBoxFix extends ResolvedCorrectionProducer {
     if (node is! InstanceCreationExpression) {
       return;
     }
-    final constructorName = node.constructorName.type.name;
+    final typeName = node.constructorName.type.name;
     await builder.addDartFileEdit(file, (builder) {
-      builder.addSimpleReplacement(range.token(constructorName), 'SizedBox');
+      builder.addSimpleReplacement(range.token(typeName), 'SizedBox');
     });
   }
 }

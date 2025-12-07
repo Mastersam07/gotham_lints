@@ -22,8 +22,9 @@ class AddAwaitFix extends ResolvedCorrectionProducer {
       return;
     }
 
-    builder.addDartFileEdit(file, (builder) {
-      builder.addSimpleInsertion(node.offset, 'await ');
+    final expression = node.expression;
+    await builder.addDartFileEdit(file, (builder) {
+      builder.addSimpleInsertion(expression.offset, 'await ');
     });
   }
 }

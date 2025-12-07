@@ -24,23 +24,27 @@ import 'package:gotham_lints/src/rules/use_sizedbox_instead_container.dart';
 final plugin = GothamLintsPlugin();
 
 class GothamLintsPlugin extends Plugin {
+  
+  @override
+  String get name => 'gotham_lint_plugin';
+
   @override
   void register(PluginRegistry registry) {
     registry
-      ..registerLintRule(UseSizedBoxInsteadOfContainerRule())
-      ..registerLintRule(FutureWithoutAsyncAwaitRule())
-      ..registerLintRule(PreferListViewBuilderRule())
-      ..registerLintRule(UnnecessaryOpacityWidgetRule())
-      ..registerLintRule(NoHardcodedColorsOrTextStylesRule())
-      ..registerLintRule(PreferDoubleOverIntForDivisionRule())
-      ..registerLintRule(EnforceImmutabilityOnModelsRule())
-      ..registerLintRule(AvoidUnhandledFutureRule())
-      ..registerLintRule(NoPrivatePropertiesInPublicApiRule())
-      ..registerLintRule(AvoidDeeplyNestedWidgetsRule())
-      ..registerLintRule(FileLengthRule())
-      ..registerLintRule(NoExportFromSrcRule())
+      ..registerWarningRule(UseSizedBoxInsteadOfContainerRule())
+      ..registerWarningRule(FutureWithoutAsyncAwaitRule())
+      ..registerWarningRule(PreferListViewBuilderRule())
+      ..registerWarningRule(UnnecessaryOpacityWidgetRule())
+      ..registerWarningRule(NoHardcodedColorsOrTextStylesRule())
+      ..registerWarningRule(PreferDoubleOverIntForDivisionRule())
+      ..registerWarningRule(EnforceImmutabilityOnModelsRule())
+      ..registerWarningRule(AvoidUnhandledFutureRule())
+      ..registerWarningRule(NoPrivatePropertiesInPublicApiRule())
+      ..registerWarningRule(AvoidDeeplyNestedWidgetsRule())
+      ..registerWarningRule(FileLengthRule())
+      ..registerWarningRule(NoExportFromSrcRule())
       ..registerFixForRule(UseSizedBoxInsteadOfContainerRule.code, UseSizedBoxFix.new)
-      ..registerFixForRule(FutureWithoutAsyncAwaitRule.code, RemoveAwait.new)
+      ..registerFixForRule(FutureWithoutAsyncAwaitRule.code, AddAsyncKeyword.new)
       ..registerFixForRule(PreferListViewBuilderRule.code, ConvertToListViewBuilderFix.new)
       ..registerFixForRule(UnnecessaryOpacityWidgetRule.code, UnnecessaryOpacityFix.new)
       ..registerFixForRule(PreferDoubleOverIntForDivisionRule.code, PreferIntegerDivisionFix.new)
