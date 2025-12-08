@@ -39,10 +39,8 @@ class ConvertToListViewBuilderFix extends ResolvedCorrectionProducer {
     }
 
     builder.addDartFileEdit(file, (builder) {
-      // Find the range of the constructor name (`ListView`).
       builder.addSimpleReplacement(range.token(constructorInvocation.constructorName.type.name), 'ListView.builder');
 
-      // Replace the `children` argument with `itemBuilder` and `itemCount`.
       builder.addSimpleReplacement(
         range.startEnd(childrenArgument.beginToken, childrenArgument.endToken),
         '''itemCount: ${childrenList.length}, itemBuilder: (context, index) {

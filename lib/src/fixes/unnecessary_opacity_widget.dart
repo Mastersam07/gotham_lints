@@ -28,7 +28,6 @@ class UnnecessaryOpacityFix extends ResolvedCorrectionProducer {
       return;
     }
 
-    // Get the `opacity` value and the `child` expression.
     final opacityArgument = node.argumentList.arguments.whereType<NamedExpression>().firstWhereOrNull(
       (e) => e.name.label.name == 'opacity',
     );
@@ -48,13 +47,9 @@ class UnnecessaryOpacityFix extends ResolvedCorrectionProducer {
     }
 
     await builder.addDartFileEdit(file, (builder) {
-      // Step 1: Delete "Opacity(opacity: X, child: " up to but not including the Image widget
-      // Use the type name's begin token to ensure we keep "Image"
       final imageTypeBeginToken = childExpression.constructorName.type.beginToken;
       builder.addDeletion(range.startStart(node.beginToken, imageTypeBeginToken));
 
-      // Step 2: Add the opacity parameter to the Image widget
-      // Insert before the closing paren of the Image's argument list
       final imageClosingParen = childExpression.argumentList.rightParenthesis;
       if (childExpression.argumentList.arguments.isEmpty) {
         builder.addSimpleInsertion(imageClosingParen.offset, 'opacity: AlwaysStoppedAnimation($opacityValue)');
@@ -62,19 +57,13 @@ class UnnecessaryOpacityFix extends ResolvedCorrectionProducer {
         builder.addSimpleInsertion(imageClosingParen.offset, ', opacity: AlwaysStoppedAnimation($opacityValue)');
       }
 
-      // Step 3: Delete from after the Image widget to the end of Opacity widget
-      // This includes the closing paren, but preserve any trailing comma
       final imageEndToken = childExpression.endToken;
       final opacityEndToken = node.endToken;
 
-      // Check if there's a trailing comma after the Opacity widget
       final nextToken = opacityEndToken.next;
       if (nextToken != null && nextToken.lexeme == ',') {
-        // Delete from after Image to just before the trailing comma
-        // This preserves the comma
         builder.addDeletion(range.startEnd(imageEndToken.next!, opacityEndToken));
       } else {
-        // No trailing comma, delete from after Image to the end of Opacity
         builder.addDeletion(range.startEnd(imageEndToken.next!, opacityEndToken));
       }
     });

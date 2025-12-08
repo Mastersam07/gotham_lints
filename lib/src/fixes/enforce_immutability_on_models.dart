@@ -22,11 +22,23 @@ class EnforceFinalFix extends ResolvedCorrectionProducer {
       return;
     }
 
-    builder.addDartFileEdit(file, (builder) {
-      final fieldDeclaration = node.parent?.parent;
-      if (fieldDeclaration is FieldDeclaration) {
-        final offset = fieldDeclaration.fields.beginToken.offset;
-        builder.addSimpleInsertion(offset, 'final ');
+    final fieldDeclaration = node.thisOrAncestorOfType<FieldDeclaration>();
+    if (fieldDeclaration == null) {
+      return;
+    }
+
+    if (fieldDeclaration.fields.isFinal) {
+      return;
+    }
+
+    await builder.addDartFileEdit(file, (builder) {
+      final fields = fieldDeclaration.fields;
+
+      final typeAnnotation = fields.type;
+      if (typeAnnotation != null) {
+        builder.addSimpleInsertion(typeAnnotation.offset, 'final ');
+      } else {
+        builder.addSimpleInsertion(fields.beginToken.offset, 'final ');
       }
     });
   }
